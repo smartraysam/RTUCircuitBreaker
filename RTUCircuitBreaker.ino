@@ -131,9 +131,8 @@ void setup()
   setGSMHTTP(networkAPN);
   Debug(F("\nGSM Setup Complete\n"));
   delay(500);
-  sendData("AT+CGNSPWR=1", 1000);
+  sendData("AT+CMGF=1", 1000);
   delay(50);
-  sendData("AT+CGNSSEQ=RMC", 1000);
 }
 void loop()
 {
@@ -179,22 +178,26 @@ void controlRelay(StaticJsonDocument<200> doc) {
     Serial.println(F("c1 on"));
     digitalWrite(relay_red_phase1,  1);
     digitalWrite(relay_red_phase2,  0);
+    digitalWrite(led1l,  1);
     f_one = 1;
   } else if (String(c1) == "0") {
     Serial.println(F("c1 off"));
     digitalWrite(relay_red_phase1,  0);
     digitalWrite(relay_red_phase2,  1);
+    digitalWrite(led1l,  0);
     f_one = 0;
   }
   if (String(c2) == "1") {
     Serial.println(F("c2 on"));
     digitalWrite(relay_blue_phase1 ,  1);
     digitalWrite(relay_blue_phase2 , 0);
+    digitalWrite(led2l,  1);
     f_two = 1;
   }  else if (String(c2) == "0") {
     Serial.println(F("c2 off"));
     digitalWrite(relay_blue_phase1 , 0);
     digitalWrite(relay_blue_phase2 , 1);
+    digitalWrite(led2l,  0);
     f_two = 0;
   }
 }

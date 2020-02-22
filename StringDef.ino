@@ -261,8 +261,10 @@ String readSms() {
   wdt_reset();
   String response = sendData("AT+CMGR=" + String(smscount), 500); //read message at index i
   if (response.indexOf("+CMGR:") != -1) {
-    ctrlText = response.substring(response.indexOf(F("{")), response.indexOf(F("}")) + 1);//extracts text frm JSON in the sms
-    Serial.println(ctrlText);
+    if (response.indexOf("{") != -1) {
+      ctrlText = response.substring(response.indexOf(F("{")), response.indexOf(F("}")) + 1);//extracts text frm JSON in the sms
+      Serial.println(ctrlText);
+    }
     sendData("AT+CMGD=" + String(smscount), 50);
     wdt_reset();
   }
